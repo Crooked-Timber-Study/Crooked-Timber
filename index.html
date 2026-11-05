@@ -62,7 +62,7 @@ th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute
 td.n{white-space:nowrap;font-variant-numeric:tabular-nums}
 .tbl{overflow-x:auto;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:6px 10px;margin-bottom:12px}
 
-.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.finds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
 .find{background:var(--wood-soft);border-radius:12px;padding:20px 22px}
 .find h3{font-size:19px;margin-bottom:8px}
 .find p{font-size:15.5px;margin:0}
@@ -80,6 +80,26 @@ footer{border-top:1px solid var(--line);padding:44px 0 60px}
 blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(20px,3vw,24px);line-height:1.4;max-width:620px}
 .src{font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--muted)}
 .thanks{margin-top:32px;font-size:15px;color:var(--muted)}
+nav.jump{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:22px}
+nav.jump a{font-size:14px;font-weight:500;color:var(--ink);text-decoration:none;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:5px 14px}
+nav.jump a:hover{background:var(--wood-soft)}
+section[id]{scroll-margin-top:12px}
+.flow{list-style:none;margin:20px 0 6px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;counter-reset:step}
+.flow li{counter-increment:step;background:var(--wood-soft);border-radius:12px;padding:16px 18px;font-size:15px;line-height:1.45}
+.flow li::before{content:"0" counter(step);display:block;font-family:Fraunces,Georgia,serif;font-size:22px;font-weight:600;color:var(--no);margin-bottom:4px}
+.flow b{display:block;font-weight:600;margin-bottom:2px}
+.flow .ai{background:var(--paper);border:1px solid var(--line)}
+.materials{font-size:15px;color:var(--muted);margin-top:28px}
+.materials p{margin:0 0 6px}
+@media (max-width:560px){
+  .tbl{padding:4px 14px}
+  .tbl thead{display:none}
+  .tbl tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
+  .tbl tr:last-child{border-bottom:0}
+  .tbl td{display:block;border:0;padding:2px 0}
+  .tbl td:first-child{margin-bottom:6px}
+  .tbl td.n::before{content:attr(data-g) " · ";font-weight:600;color:var(--muted)}
+}
 @media (max-width:520px){
   body{font-size:16px}
   .card{grid-template-columns:1fr;padding:20px}
@@ -98,19 +118,32 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
   </div>
   <p class="lede">Does showing an AI's confidence stop people from following wrong advice? An experiment on credit decisions.</p>
   <p class="meta">Madeleine Sieber · CAS ETH in Machine Learning in Finance and Insurance · 2026</p>
+  <nav class="jump" aria-label="On this page">
+    <a href="#design">How it worked</a>
+    <a href="#results">Results H1–H4</a>
+    <a href="#switching">When people switched</a>
+    <a href="#ambiguous">The ambiguous number</a>
+    <a href="#limits">Limits</a>
+  </nav>
 </header>
 
 <section>
   <div class="short">
-    <p><strong>The short answer: no, not in this study.</strong> Showing the AI's confidence as a percentage did not measurably reduce how often people followed wrong recommendations, and it did not make decisions more accurate.</p>
+    <p><strong>The short answer: no clear evidence of a benefit in this study.</strong> Showing the AI's confidence as a percentage did not measurably reduce how often people followed wrong recommendations, and it did not measurably improve their decisions.</p>
     <p>Two things stood out instead. People rarely changed their mind at all. And the percentage itself turned out to be ambiguous: depending on how you read it, it either contradicted the AI or almost gave away the answer.</p>
   </div>
 </section>
 
-<section>
+<section id="design">
   <h2>How the study worked</h2>
   <p>Participants judged 18 historical loan applications from the South German Credit Dataset, where we know whether each loan was repaid. For every case they first decided on their own (approve or reject), rated how sure they were, then saw an AI recommendation and made a final decision.</p>
-  <p>Half of the participants saw the recommendation alone (<strong>Group A</strong>). The other half also saw a confidence value in percent (<strong>Group B</strong>). The recommendations came from six large language models; where most of them were wrong, participants saw the wrong recommendation.</p>
+  <ol class="flow" aria-label="One credit decision, step by step">
+    <li><b>Own decision</b>Approve or reject, alone.</li>
+    <li><b>How sure?</b>Rate your confidence, 1 to 7.</li>
+    <li class="ai"><b>AI advice</b>Group A: the recommendation.<br>Group B: plus a percentage.</li>
+    <li><b>Final decision</b>Keep it, or switch?</li>
+  </ol>
+  <p>Half of the participants saw the recommendation alone (<strong>Group A</strong>). The other half also saw a confidence value in percent (<strong>Group B</strong>). The recommendations came from six large language models; where most of them were wrong, participants saw the wrong recommendation. The percentages were set as part of the experiment, not produced by a calibrated credit model.</p>
   <div class="design">
     <div><b>89</b><span>participants, about 70&nbsp;% from banking and finance</span></div>
     <div><b>18</b><span>cases: 6 easy, 6 medium, 6 hard (difficulty set in a pilot with credit analysts)</span></div>
@@ -119,7 +152,7 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
   </div>
 </section>
 
-<section>
+<section id="results">
   <h2>At a glance</h2>
   <div class="hyp">
 
@@ -142,10 +175,10 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
       <div class="cols">
         <p><span class="label">We expected</span>On hard cases, people who see the % (B) switch to the AI less often.</p>
         <p><span class="label">We found</span>Hard cases: A 5.3&nbsp;% · B 6.7&nbsp;% switched, the opposite direction.</p>
-        <p><span class="label">What it means</span>The % made nobody more careful. If anything, the opposite, but the difference is not significant.</p>
+        <p><span class="label">What it means</span>No sign that the % made people more careful. The difference even points the other way, but it is not significant.</p>
       </div>
       <div class="more">
-        <p>Group B made no switch at all on easy cases, so the preregistered statistical model could not be estimated. The additional tests found no group difference (hard cases only: odds ratio 1.28, p = .51).</p>
+        <p>Group B made no switch at all on easy cases, so the preregistered statistical model could not be estimated. The additional tests found no group difference (hard cases only: odds ratio 1.28, 95&nbsp;% interval 0.62 to 2.64, p = .51). That interval is wide: an effect in either direction cannot be ruled out.</p>
       </div>
     </article>
 
@@ -155,7 +188,7 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
       <div class="cols">
         <p><span class="label">We expected</span>On hard cases, people who see the % (B) make more correct decisions.</p>
         <p><span class="label">We found</span>Hard cases correct: A 49&nbsp;% · B 53&nbsp;%.</p>
-        <p><span class="label">What it means</span>No better decisions. Group B was already slightly ahead before seeing the AI.</p>
+        <p><span class="label">What it means</span>No detectable gain from the %. Group B was already slightly ahead before seeing the AI.</p>
       </div>
       <div class="more">
         <p>Before the recommendation, B was at 54.8&nbsp;% and A at 51.9&nbsp;% on hard cases, so the gap was there from the start. On hard cases, accuracy even dropped slightly after the recommendation in both groups: four of the six hard cases were AI errors, so the AI was right less often than the participants themselves (odds ratio 1.23, p = .33).</p>
@@ -166,28 +199,29 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
       <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 10 4 19l20 9 20-9Z"/><path d="M12 23v9c0 3 5 6 12 6s12-3 12-6v-9"/><path d="M44 19v11"/></svg>
       <h3>H4 · The Cap <span class="pill open">Not testable</span></h3>
       <div class="cols">
-        <p><span class="label">We expected</span>The % helps experts more than others.</p>
-        <p><span class="label">We found</span>No sign that expertise mattered.</p>
-        <p><span class="label">What it means</span>Experts were no more accurate to begin with, and did not use the % better.</p>
+        <p><span class="label">We expected</span>People with more expertise make better use of the %.</p>
+        <p><span class="label">We found</span>The planned test could not be estimated. Simpler models showed no moderation.</p>
+        <p><span class="label">What it means</span>We can't say whether expertise changes how people use the %.</p>
       </div>
       <div class="more">
-        <p>People who regularly make credit decisions were initially right 64.6&nbsp;% of the time, the others 64.1&nbsp;%. How expert people rated themselves went with how sure they felt, not with how often they were right.</p>
+        <p>Expertise was measured as how often a person was right before seeing the AI. Like H2, the planned model failed because there were too few switches on easy cases; a model on hard cases only showed no moderation (p = .14; with self-rated expertise p = .50). Initial accuracy also hardly differed between people, so it was barely usable as a measure of expertise.</p>
+        <p>Separately: people who regularly make credit decisions were initially right 64.6&nbsp;% of the time, the others 64.1&nbsp;%. And how expert people rated themselves went with how sure they felt, not with how often they were right.</p>
       </div>
     </article>
 
   </div>
 </section>
 
-<section>
+<section id="switching">
   <h2>When did people switch?</h2>
   <p>Across all cases, people changed their decision in only 4 to 5&nbsp;% of trials. The table shows what happened in the situations where it mattered.</p>
   <div class="tbl">
     <table>
       <thead><tr><th>Situation</th><th>Group A</th><th>Group B</th></tr></thead>
       <tbody>
-        <tr><td>AI wrong, person right at first: <strong>switched to the wrong answer</strong></td><td class="n">14 of 75 · 19&nbsp;%</td><td class="n">22 of 95 · 23&nbsp;%</td></tr>
-        <tr><td>AI right, person wrong at first: <strong>switched to the right answer</strong></td><td class="n">16 of 54 · 30&nbsp;%</td><td class="n">16 of 63 · 25&nbsp;%</td></tr>
-        <tr><td>AI wrong, person already agreed with it before seeing it</td><td class="n">76&nbsp;%</td><td class="n">70&nbsp;%</td></tr>
+        <tr><td>AI wrong, person right at first: <strong>switched to the wrong answer</strong></td><td class="n" data-g="A">14 of 75 · 19&nbsp;%</td><td class="n" data-g="B">22 of 95 · 23&nbsp;%</td></tr>
+        <tr><td>AI right, person wrong at first: <strong>switched to the right answer</strong></td><td class="n" data-g="A">16 of 54 · 30&nbsp;%</td><td class="n" data-g="B">16 of 63 · 25&nbsp;%</td></tr>
+        <tr><td>AI wrong, person already agreed with it before seeing it</td><td class="n" data-g="A">233 of 308 · 76&nbsp;%</td><td class="n" data-g="B">220 of 315 · 70&nbsp;%</td></tr>
       </tbody>
     </table>
   </div>
@@ -203,7 +237,7 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
     </div>
     <div class="find">
       <h3>Noticed, not used</h3>
-      <p>Group B remembered the percentages: 29 of 40 named a displayed value exactly. The number shifted how sure people felt, but hardly what they decided.</p>
+      <p>Group B remembered the percentages: of the 40 who named one, 29 recalled a displayed value exactly and all were within three points. The number shifted how sure people felt, but hardly what they decided.</p>
     </div>
     <div class="find">
       <h3>Liked more</h3>
@@ -216,11 +250,11 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
   </div>
 </section>
 
-<section>
+<section id="ambiguous">
   <div class="display">
     <h2>The number was ambiguous</h2>
     <p>Group B was told that the percentage shows how often the AI was right in similar cases. But for correct reject recommendations, the values had been set as the probability of <em>approval</em>, so a correct recommendation could appear as <span class="chip">Reject · 14&nbsp;%</span>.</p>
-    <p>Read as instructed, such a number says the AI is probably wrong. Read as a probability of approval, the numbers pointed to the right answer in 17 of 18 cases. Group B did not exploit this, so people either ignored the number or read it inconsistently. The study therefore tests this particular display, not confidence displays in general.</p>
+    <p>Read as instructed, such a number says the AI is probably wrong. Read as a probability of approval, the numbers pointed to the right answer in 17 of 18 cases. Group B noticed the numbers, and they shifted how sure people felt, but their decisions did not reflect this hidden hint. How people actually read the number, we cannot tell. The study therefore tests this particular display, not confidence displays in general.</p>
     <p style="margin:0"><strong>What a clearer display would need:</strong></p>
     <ul>
       <li>One meaning only: how likely this recommendation is correct, so never below 50&nbsp;%.</li>
@@ -231,10 +265,11 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
   </div>
 </section>
 
-<section>
+<section id="limits">
   <h2>Limits</h2>
   <ul class="plain">
     <li><strong>Few switches, low power.</strong> Switching was far rarer than planned for, so a real but small effect could have been missed. The null results are not proof that confidence displays never work.</li>
+    <li><strong>Good and bad reliance are hard to separate.</strong> On most AI-error cases, people had already reached the AI's wrong answer on their own. When people and AI struggle with the same cases, following the AI and simply agreeing with it look the same.</li>
     <li><strong>Difficulty and AI errors overlap.</strong> Hard cases had more AI errors (1, 2 and 4 per level), and medium and hard cases did not differ in practice.</li>
     <li><strong>One case shown incompletely.</strong> Case 17 lacked credit history and purpose; leaving it out changes nothing.</li>
     <li><strong>The benchmark contains chance.</strong> "Correct" means matching what actually happened to a loan from the 1970s; good borrowers sometimes default.</li>
@@ -245,6 +280,10 @@ blockquote{margin:0 0 10px;font-family:Fraunces,Georgia,serif;font-style:italic;
 <footer>
   <blockquote>«Aus so krummem Holze, als woraus der Mensch gemacht ist, kann nichts ganz Gerades gezimmert werden.»</blockquote>
   <p class="src">Immanuel Kant, 1784</p>
+  <div class="materials">
+    <p><strong>Data source:</strong> <a href="https://archive.ics.uci.edu/dataset/522/south+german+credit">South German Credit Dataset</a> (Grömping, 2019, UCI Machine Learning Repository).</p>
+    <p><strong>Preregistration:</strong> analysis plan registered on OSF on 9 September 2026, after data collection (10–23 June 2026) and before any results were looked at.</p>
+  </div>
   <p class="thanks">Thank you to everyone who took part. Approved by the ETH Zürich Ethics Commission (#15483).</p>
 </footer>
 
